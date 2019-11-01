@@ -15,8 +15,8 @@ services:
       - “9090:9090”
     # 将宿主机中的config文件夹，挂载到容器中/config文件夹
     volumes:
-      - /root/web_prometheus/config:/config
-      - /root/web_prometheus/data/prometheus:/prometheus/data
+      - /root/docker/web_prometheus/config:/config
+      - /root/docker/web_prometheus/data/prometheus:/prometheus/data
     # 指定容器中的配置文件
     command:
       --config.file=/config/prometheus.yml
@@ -32,8 +32,8 @@ services:
     ports:
       - “9093:9093”
     volumes:
-      - /root/web_prometheus/config:/config
-      - /root/web_prometheus/data/alertmanager:/alertmanager/data
+      - /root/docker/web_prometheus/config:/config
+      - /root/docker/web_prometheus/data/alertmanager:/alertmanager/data
     command:
       --config.file=/config/alertmanager.yml
 
@@ -47,5 +47,5 @@ services:
       - “3000:3000”
     volumes:
       # 配置grafana 邮件服务器
-      - /root/web_prometheus/config/grafana.ini:/etc/grafana/grafana.ini
-      - /root/web_prometheus/data/grafana:/var/lib/grafana
+      - /root/docker/web_prometheus/config/grafana.ini:/etc/grafana/grafana.ini
+      - /root/docker/web_prometheus/data/grafana:/var/lib/grafana
