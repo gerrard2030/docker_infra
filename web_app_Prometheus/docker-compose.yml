@@ -26,7 +26,8 @@ services:
       - /root/docker/web_prometheus/data/alertmanager:/alertmanager/data
     command:
       --config.file=/config/alertmanager.yml
-
+      
+  grafana:
     image: grafana/grafana:latest
     container_name: grafana
     hostname: grafana
