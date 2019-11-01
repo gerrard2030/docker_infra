@@ -1,29 +1,19 @@
 version: '3.7'
 services:
-  # 添加 普罗米修斯服务
   prometheus:
-    # Docker Hub 镜像
     image: prom/prometheus:latest
-    # 容器名称
     container_name: prometheus
-    # 容器内部 hostname
     hostname: prometheus
-    # 容器支持自启动
     restart: always
-    # 容器与宿主机 端口映射
     ports:
       - “9090:9090”
-    # 将宿主机中的config文件夹，挂载到容器中/config文件夹
     volumes:
       - /root/docker/web_prometheus/config:/config
       - /root/docker/web_prometheus/data/prometheus:/prometheus/data
-    # 指定容器中的配置文件
     command:
       --config.file=/config/prometheus.yml
-      # 支持热更新
       --web.enable-lifecycle
 
-  # 添加告警模块
   alertmanager:
     image: prom/alertmanager:latest
     container_name: alertmanager
@@ -37,8 +27,6 @@ services:
     command:
       --config.file=/config/alertmanager.yml
 
-  # 添加监控可视化面板
-  grafana:
     image: grafana/grafana:latest
     container_name: grafana
     hostname: grafana
@@ -46,6 +34,5 @@ services:
     ports:
       - “3000:3000”
     volumes:
-      # 配置grafana 邮件服务器
       - /root/docker/web_prometheus/config/grafana.ini:/etc/grafana/grafana.ini
       - /root/docker/web_prometheus/data/grafana:/var/lib/grafana
