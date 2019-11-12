@@ -1,0 +1,11 @@
+groups:
+- name: node_alerts
+  rules:
+  - alert: HighNodeCPU
+    expr: instance:node_cpu:avg_rate5m > 12
+#    for: 60m
+    labels:
+      severity: warning
+    annotations:
+      summary: High Node CPU for 1 hour
+      console: You might want to check the Node Dashboard at http://xxxxxx.xom
