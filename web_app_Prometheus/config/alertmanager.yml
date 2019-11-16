@@ -26,7 +26,7 @@
      email_configs: # 邮箱配置
        - to: 'zhang.jian@titans-systems.cn'  # 接收警报的email配置
      slack_configs:
-       - api_url: 'https://hooks.slack.com/services/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' # slack api 地址
+       - api_url: 'https://hooks.slack.com/services/XXXX' # slack api 地址
          channel: '#test'
          text: 'click here'
          title: "{{.CommonAnnotations.summary}}"
