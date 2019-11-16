@@ -1,19 +1,19 @@
 version: '3.7'
 services:
-  mindoc:
+  nginx:
     container_name: nginx
-    image: nginx:latest
+    image: nginx
     ports:
       - "80:80"
     privileged: true
     restart: always
     volumes:
-      - $link/certs:/certs
-      - $link/html:/usr/share/nginx/html
-      - $link/nginx.conf:/etc/nginx/nginx.conf
-      - $link/conf.d:/etc/nginx/conf.d
-      - $link/logs:/var/log/nginx
-      networks:
+      - $pwd/certs:/certs
+      - $pwd/html:/usr/share/nginx/html
+      - $pwd/nginx.conf:/etc/nginx/nginx.conf
+      - $pwd/conf.d:/etc/nginx/conf.d
+      - $pwd/logs:/var/log/nginx
+    networks:
       - nginx
 
 networks:
