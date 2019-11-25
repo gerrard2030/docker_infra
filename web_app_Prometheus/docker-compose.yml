@@ -8,8 +8,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - /Users/Ken/Downloads/web_prometheus/config:/config
-      - /Users/Ken/Downloads/web_prometheus/data/prometheus:/prometheus/data
+      - $pwd/config:/config
+      - $pwd/data/prometheus:/prometheus/data
     command:
       --config.file=/config/prometheus.yml
       --web.enable-lifecycle
@@ -24,8 +24,8 @@ services:
     ports:
       - "9093:9093"
     volumes:
-      - /Users/Ken/Downloads/web_prometheus/config:/config
-      - /Users/Ken/Downloads/web_prometheus/data/alertmanager:/alertmanager/data
+      - $pwd/config:/config
+      - $pwd/data/alertmanager:/alertmanager/data
     command:
       --config.file=/config/alertmanager.yml
     networks:
@@ -39,8 +39,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /Users/Ken/Downloads/web_prometheus/config/grafana.ini:/etc/grafana/grafana.ini
-      - /Users/Ken/Downloads/web_prometheus/data/grafana:/var/lib/grafana
+      - $pwd/config/grafana.ini:/etc/grafana/grafana.ini
+      - $pwd/data/grafana:/var/lib/grafana
     networks:
       - monitor
 
