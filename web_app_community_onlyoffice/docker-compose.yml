@@ -1,0 +1,70 @@
+version: '3'
+services:
+  onlyoffice-mysql-server01:
+    container_name: onlyoffice-mysql-server01
+    image: mysql:5.7.28
+    environment:
+     - MYSQL_ROOT_PASSWORD=3nvisi0n!
+    networks:
+     - onlyoffice
+    stdin_open: true
+    tty: true
+    restart: always
+    volumes:
+     - $pwd/mysql/conf.d:/etc/mysql/conf.d
+     - $pwd/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+     - $pwd/mysql_data:/var/lib/mysql
+  onlyoffice-community-server:
+    container_name: onlyoffice-community-server
+    image: onlyoffice/communityserver:latest
+    depends_on:
+     - onlyoffice-mysql-server01
+     - onlyoffice-document-server-01
+    environment:
+     - ONLYOFFICE_CORE_MACHINEKEY=core_secret
+     - DOCUMENT_SERVER_PORT_80_TCP_ADDR=onlyoffice-document-server-01
+     - MYSQL_SERVER_ROOT_PASSWORD=3nvisi0n!
+     - MYSQL_SERVER_DB_NAME=onlyoffice
+     - MYSQL_SERVER_HOST=onlyoffice-mysql-server01
+     - MYSQL_SERVER_USER=titans
+     - MYSQL_SERVER_PASS=Titans!2n
+    networks:
+     - onlyoffice
+    ports:
+     - '8181:80'
+     - '8443:443'
+    stdin_open: true
+    tty: true
+    restart: always
+    volumes:
+     - $pwd/community_data:/var/www/onlyoffice/Data
+     - $pwd/community_log:/var/log/onlyoffice
+     - $pwd/document_data:/var/www/onlyoffice/DocumentServerData
+     - $pwd/certs:/var/www/onlyoffice/Data/certs
+  onlyoffice-document-server-01:
+    container_name: onlyoffice-document-server-01
+    image: onlyoffice/documentserver:latest
+    stdin_open: true
+    tty: true
+    restart: always
+    networks:
+      - onlyoffice
+    expose:
+      - '80'
+      - '443'
+    volumes:
+       - $pwd/document_data:/var/www/onlyoffice/Data
+       - $pwd/document_log:/var/log/onlyoffice
+       - $pwd/document_fonts:/usr/share/fonts/truetype/custom
+       - $pwd/document_forgotten:/var/lib/onlyoffice/documentserver/App_Data/cache/files/forgotten
+
+networks:
+  onlyoffice:
+    driver: 'bridge'
+volumes:
+  document_data:
+  document_log:
+  document_forgotten:
+  community_data:
+  community_log:
+  mysql_data:

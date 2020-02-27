@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  rsync-server:
+    restart: always
+    image: axiom/rsync-server
+    container_name: rsync-server-test
+    volumes:
+      - /root/rsync/data/:/data
+    ports:
+      - "873:873"
+    environment:
+      - USERNAME=root
+      - PASSWORD=Titans!2n
+      - VOLUME=/data
+      - ALLOW=192.168.0.0/24
+
+#针对QNAP同步到本地服务器
