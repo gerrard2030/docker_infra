@@ -1,3 +1,2 @@
 # docker_infra
-web_app_mindoc
-web_app_phpipam
+所有应用需要调整ENV，注意路径
